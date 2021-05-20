@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Obraz'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Obraz'|trans }}</h1>
+    {% if image is defined and image|length %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'image_id'|trans }}</th>
+                <th>{{ 'image_name'|trans }}</th>
+                <th>{{ 'image_desc'|trans }}</th>
+                <th>{{ 'image_width'|trans }}</th>
+                <th>{{ 'image_height'|trans }}</th>
+                <th>{{ 'image_album_id'|trans }}</th>
+                <th>{{ 'image_user_id'|trans }}</th>
+                <th>{{ 'image_time_create'|trans }}</th>
+                <th>{{ 'image_type_id'|trans }}</th>
+                <th>{{ 'image_col'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for image in image %}
+                <tr>
+                    <td>{{ image.ImageId }}</td>
+                    <td>{{ image.ImageName }}</td>
+                    <td>{{ image.ImageDesc }}</td>
+                    <td>{{ image.ImageWidth }}</td>
+                    <td>{{ image.ImageHeight }}</td>
+                    <td>{{ image.AlbumId }}</td>
+                    <td>{{ image.UserId }}</td>
+                    <td>{{ image.ImageTimeCreate|date('Y/m/d') }}</td>
+                    <td>{{ image.TypeId }}</td>
+                    <td>{{ image.ImageCol }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

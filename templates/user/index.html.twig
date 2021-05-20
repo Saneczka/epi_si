@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Dane użytkowników'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Dane użytkowników'|trans }}</h1>
+    {% if user is defined and user|length %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'user_id'|trans }}</th>
+                <th>{{ 'username'|trans }}</th>
+                <th>{{ 'user_password'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in user %}
+                <tr>
+                    <td>{{ user.UserId }}</td>
+                    <td>{{ user.Username }}</td>
+                    <td>{{ user.UserPassword }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_user_details'|trans({'%id%': user.UserId|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_user_details'|trans({'%id%': user.UserId|default('')}) }}</h1>
+    {% if user is defined and user|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'user_id'|trans }}</dt>
+            <dd>{{ user.UserId }}</dd>
+            <dt>{{ 'username'|trans }}</dt>
+            <dd>{{ user.Username }}</dd>
+            <dt>{{ 'user_password'|trans }}</dt>
+            <dd>{{ user.UserPassword}}</dd>
+        </dl>
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

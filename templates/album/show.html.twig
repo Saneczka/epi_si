@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_album_details'|trans({'%id%': album.AlbumId|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_album_details'|trans({'%id%': album.AlbumId|default('')}) }}</h1>
+    {% if album is defined and album|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'album_id'|trans }}</dt>
+            <dd>{{ album.AlbumId }}</dd>
+            <dt>{{ 'album_name'|trans }}</dt>
+            <dd>{{ album.AlbumName }}</dd>
+            <dt>{{ 'user_id'|trans }}</dt>
+            <dd>{{ album.UserId}}</dd>
+            <dt>{{ 'album_time_create'|trans }}</dt>
+            <dd>{{ album.AlbumTimeCreate|date('Y/m/d') }}</dd>
+        </dl>
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

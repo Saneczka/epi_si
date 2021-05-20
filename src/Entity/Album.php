@@ -35,7 +35,7 @@ class Album
     /**
      * @ORM\Column(type="datetime")
      */
-    private $album_film_create;
+    private $album_time_create;
 
     public function getId(): ?int
     {
@@ -78,14 +78,14 @@ class Album
         return $this;
     }
 
-    public function getAlbumFilmCreate(): ?\DateTimeInterface
+    public function getAlbumTimeCreate(): ?\DateTimeInterface
     {
-        return $this->album_film_create;
+        return $this->album_time_create;
     }
 
-    public function setAlbumFilmCreate(\DateTimeInterface $album_film_create): self
+    public function setAlbumTimeCreate(\DateTimeInterface $album_time_create): self
     {
-        $this->album_film_create = $album_film_create;
+        $this->album_time_create = $album_time_create;
 
         return $this;
     }

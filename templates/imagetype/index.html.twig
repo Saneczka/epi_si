@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Typ obrazu'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Typ obrazu'|trans }}</h1>
+    {% if imagetype is defined and imagetype|length %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'type_id'|trans }}</th>
+                <th>{{ 'image_type'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for imagetype in imagetype %}
+                <tr>
+                    <td>{{ imagetype.TypeId }}</td>
+                    <td>{{ imagetype.ImageType }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

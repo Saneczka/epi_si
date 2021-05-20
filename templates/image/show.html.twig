@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_image_details'|trans({'%id%': image.ImageId|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_image_details'|trans({'%id%': image.ImageId|default('')}) }}</h1>
+    {% if image is defined and image|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'image_id'|trans }}</dt>
+            <dd>{{ image.ImageId }}</dd>
+            <dt>{{ 'image_name'|trans }}</dt>
+            <dd>{{ image.ImageName }}</dd>
+            <dt>{{ 'image_desc'|trans }}</dt>
+            <dd>{{ image.ImageDesc }}</dd>
+            <dt>{{ 'image_width'|trans }}</dt>
+            <dd>{{ image.ImageWidth }}</dd>
+            <dt>{{ 'image_height'|trans }}</dt>
+            <dd>{{ imagee.ImageHeight }}</dd>
+            <dt>{{ 'album_id'|trans }}</dt>
+            <dd>{{ image.AlbumId }}</dd>
+            <dt>{{ 'user_id'|trans }}</dt>
+            <dd>{{ image.UserId }}</dd>
+            <dt>{{ 'image_time_create'|trans }}</dt>
+            <dd>{{ image.ImageTimeCreate|date('Y/m/d') }}</dd>
+            <dt>{{ 'image_type_id'|trans }}</dt>
+            <dd>{{ image.TypeId }}</dd>
+            <dt>{{ 'image_col'|trans }}</dt>
+            <dd>{{ image.ImageCol }}</dd>
+        </dl>
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

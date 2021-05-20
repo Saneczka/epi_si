@@ -23,7 +23,7 @@ class UserData
     private $user_id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=250)
      */
     private $user_email;
 
@@ -41,11 +41,6 @@ class UserData
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $user_icon;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $user_role = [];
 
     public function getId(): ?int
     {
@@ -108,18 +103,6 @@ class UserData
     public function setUserIcon(?string $user_icon): self
     {
         $this->user_icon = $user_icon;
-
-        return $this;
-    }
-
-    public function getUserRole(): ?array
-    {
-        return $this->user_role;
-    }
-
-    public function setUserRole(array $user_role): self
-    {
-        $this->user_role = $user_role;
 
         return $this;
     }

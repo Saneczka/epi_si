@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Dane komentarze'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Dane komentarze'|trans }}</h1>
+    {% if comment is defined and comment|length %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'comment_id'|trans }}</th>
+                <th>{{ 'comment_content'|trans }}</th>
+                <th>{{ 'user_id'|trans }}</th>
+                <th>{{ 'image_id'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comment in comment %}
+                <tr>
+                    <td>{{ comment.CommentId }}</td>
+                    <td>{{ comment.CommentContent }}</td>
+                    <td>{{ comment.UserId }}</td>
+                    <td>{{ comment.ImageId }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

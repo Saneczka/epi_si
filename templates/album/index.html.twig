@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Albumy użytkowników'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Albumy użytkowników'|trans }}</h1>
+    {% if album is defined and album|length %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'album_id'|trans }}</th>
+                <th>{{ 'album_name'|trans }}</th>
+                <th>{{ 'user_id'|trans }}</th>
+                <th>{{ 'album_time_create'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for album in album %}
+                <tr>
+                    <td>{{ album.AlbumId }}</td>
+                    <td>{{ album.AlbumName }}</td>
+                    <td>{{ album.UserId }}</td>
+                    <td>{{ album.AlbumTimeCreate|date('Y/m/d') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

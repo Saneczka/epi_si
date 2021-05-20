@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_imagetype_details'|trans({'%id%': imagetype.TypeId|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'titleimagetype_details'|trans({'%id%': imagetype.TypeId|default('')}) }}</h1>
+    {% if imagetype is defined and imagetype|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'type_id'|trans }}</dt>
+            <dd>{{ imagetype.TypeId }}</dd>
+            <dt>{{ 'image_type'|trans }}</dt>
+            <dd>{{ imagetype.ImageType }}</dd>
+        </dl>
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}
