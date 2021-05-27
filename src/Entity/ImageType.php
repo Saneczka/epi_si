@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ImageTypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,16 @@ class ImageType
      * @ORM\Column(type="string", length=45)
      */
     private $image_type;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="type")
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +64,36 @@ class ImageType
     public function setImageType(string $image_type): self
     {
         $this->image_type = $image_type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getType() === $this) {
+                $image->setType(null);
+            }
+        }
 
         return $this;
     }

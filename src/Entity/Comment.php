@@ -28,14 +28,16 @@ class Comment
     private $comment_content;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comment")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Image::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $image_id;
+    private $image;
 
     public function getId(): ?int
     {
@@ -66,26 +68,26 @@ class Comment
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUser(): ?user
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(int $user_id): self
+    public function setUser(?user $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getImageId(): ?int
+    public function getImage(): ?image
     {
-        return $this->image_id;
+        return $this->image;
     }
 
-    public function setImageId(int $image_id): self
+    public function setImage(?image $image): self
     {
-        $this->image_id = $image_id;
+        $this->image = $image;
 
         return $this;
     }

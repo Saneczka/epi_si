@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,29 +45,37 @@ class Image
     private $image_height;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $album_id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $user_id;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $image_time_create;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="image")
      */
-    private $type_id;
+    private $comments;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Album::class, inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $image_col;
+    private $album;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ImageType::class, inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -132,30 +142,6 @@ class Image
         return $this;
     }
 
-    public function getAlbumId(): ?int
-    {
-        return $this->album_id;
-    }
-
-    public function setAlbumId(int $album_id): self
-    {
-        $this->album_id = $album_id;
-
-        return $this;
-    }
-
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
-
     public function getImageTimeCreate(): ?\DateTimeInterface
     {
         return $this->image_time_create;
@@ -168,27 +154,72 @@ class Image
         return $this;
     }
 
-    public function getTypeId(): ?int
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
     {
-        return $this->type_id;
+        return $this->comments;
     }
 
-    public function setTypeId(int $type_id): self
+    public function addComment(Comment $comment): self
     {
-        $this->type_id = $type_id;
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setImage($this);
+        }
 
         return $this;
     }
 
-    public function getImageCol(): ?string
+    public function removeComment(Comment $comment): self
     {
-        return $this->image_col;
-    }
-
-    public function setImageCol(?string $image_col): self
-    {
-        $this->image_col = $image_col;
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getImage() === $this) {
+                $comment->setImage(null);
+            }
+        }
 
         return $this;
     }
+
+    public function getAlbum(): ?album
+    {
+        return $this->album;
+    }
+
+    public function setAlbum(?album $album): self
+    {
+        $this->album = $album;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?user $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getType(): ?ImageType
+    {
+        return $this->type;
+    }
+
+    public function setType(?ImageType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
 }
+

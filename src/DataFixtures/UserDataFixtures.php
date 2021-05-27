@@ -6,49 +6,43 @@
 namespace App\DataFixtures;
 
 use App\Entity\UserData;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
 /**
  * Class TaskFixtures.
  */
-class UserDataFixtures extends Fixture
+class UserDataFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
-     * Faker.
-     *
-     * @var \Faker\Generator
-     */
-    protected $faker;
-
-    /**
-     * Persistence object manager.
-     *
-     * @var \Doctrine\Persistence\ObjectManager
-     */
-    protected $manager;
-
-    /**
-     * Load.
+     * Load data.
      *
      * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
      */
-    public function load(ObjectManager $manager): void
+    public function loadData(ObjectManager $manager): void
     {
-        $this->faker = Factory::create();
-        $this->manager = $manager;
-
-        for ($i = 0; $i < 10; ++$i) {
+        $this->createMany(50, 'tasks', function ($i) {
             $task = new UserData();
-            $task->setUserId($this->faker->randomNumber());
             $task->setUserEmail($this->faker->email);
             $task->setUserFirstName($this->faker->firstName('male'|'female'));
             $task->setUserLastName($this->faker->lastName);
-            $task->setUserIcon($this->faker->sentence);
-            $this->manager->persist($task);
-        }
+            $task->setUserIcon($this->faker->word);
+            $task->setUser($this->getRandomReference('userData'));
+
+            return $task;
+        });
 
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on.
+     *
+     * @return array Array of dependencies
+     */
+    public function getDependencies(): array
+    {
+        return [UserFixtures::class];
     }
 }

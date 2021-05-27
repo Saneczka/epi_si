@@ -5,19 +5,18 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'Albumy użytkowników'|trans }}</h1>
-    {% if album is defined and album|length %}
+    {% if pagination is defined and pagination.items|length %}
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ 'album_id'|trans }}</th>
-                <th>{{ 'album_name'|trans }}</th>
-                <th>{{ 'user_id'|trans }}</th>
-                <th>{{ 'album_time_create'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'album_id'|trans, 'album_id')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'album_name'|trans,'album_name')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'user_id'|trans,'user_id')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'album_time_create'|trans,'album_time_create')}}</th>
             </tr>
             </thead>
             <tbody>
-            {% for album in album %}
+            {% for album in pagination.items %}
                 <tr>
                     <td>{{ album.AlbumId }}</td>
                     <td>{{ album.AlbumName }}</td>
@@ -27,6 +26,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% else %}
         <p>
             {{ 'message_empty_list'|trans }}

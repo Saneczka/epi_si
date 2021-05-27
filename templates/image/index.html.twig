@@ -6,39 +6,34 @@
 
 {% block body %}
     <h1>{{ 'Obraz'|trans }}</h1>
-    {% if image is defined and image|length %}
+    {% if pagination is defined and pagination.items|length %}
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ 'image_id'|trans }}</th>
-                <th>{{ 'image_name'|trans }}</th>
-                <th>{{ 'image_desc'|trans }}</th>
-                <th>{{ 'image_width'|trans }}</th>
-                <th>{{ 'image_height'|trans }}</th>
-                <th>{{ 'image_album_id'|trans }}</th>
-                <th>{{ 'image_user_id'|trans }}</th>
-                <th>{{ 'image_time_create'|trans }}</th>
-                <th>{{ 'image_type_id'|trans }}</th>
-                <th>{{ 'image_col'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'image_id'|trans,'image_id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'image_name'|trans,'image_name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'image_desc'|trans,'image_desc')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'image_width'|trans,'image_width')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'image_height'|trans,'image_height')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'image_time_create'|trans,'image_time_create') }}</th>
             </tr>
             </thead>
             <tbody>
-            {% for image in image %}
+            {% for image in pagination.items %}
                 <tr>
                     <td>{{ image.ImageId }}</td>
                     <td>{{ image.ImageName }}</td>
                     <td>{{ image.ImageDesc }}</td>
                     <td>{{ image.ImageWidth }}</td>
                     <td>{{ image.ImageHeight }}</td>
-                    <td>{{ image.AlbumId }}</td>
-                    <td>{{ image.UserId }}</td>
                     <td>{{ image.ImageTimeCreate|date('Y/m/d') }}</td>
-                    <td>{{ image.TypeId }}</td>
-                    <td>{{ image.ImageCol }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% else %}
         <p>
             {{ 'message_empty_list'|trans }}

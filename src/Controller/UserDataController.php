@@ -1,6 +1,6 @@
 <?php
 /**
- * Task controller.
+ * UserData controller.
  */
 
 namespace App\Controller;
@@ -12,23 +12,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class UserController.
+ * Class UserDataController.
  *
- * @Route("/userdata", name="userdata")
+ * @Route("/userdata")
  */
 class UserDataController extends AbstractController
 {
     /**
      * Index action.
      *
-     * @param \App\Repository\UserDataRepository $userdataRepository Task repository
+     * @param \App\Repository\UserDataRepository $userdataRepository UserData repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
      *     "/",
      *     methods={"GET"},
-     *     name="task_index",
+     *     name="userdata_index",
      * )
      */
     public function index(UserDataRepository $userdataRepository): Response
@@ -42,7 +42,7 @@ class UserDataController extends AbstractController
     /**
      * Show action.
      *
-     * @param \App\Entity\Album $userdata Task entity
+     * @param \App\Entity\Album $userdata UserData entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *

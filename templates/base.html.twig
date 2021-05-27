@@ -15,7 +15,14 @@
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body style="background-image: url('https://wierzba.wzks.uj.edu.pl/~19_trapeznikova/tlo.jpg')">
+    <ul>
+    <li><a href="{{ path('image_index') }}">Strona główna</a></li>
+    <li><a href="{{ path('user_index') }}">Użytkownicy</a></li>
+    <li><a href="{{ path('album_index') }}">Albumy</a></li>
+    <li><a href="{{ path('comment_index') }}">Komentarze</a></li>
+    </ul>
+    {% block body %}
+        {% endblock %}
     </body>
 </html>

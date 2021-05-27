@@ -10,7 +10,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ 'user_id'|trans }}</th>
                 <th>{{ 'user_email'|trans }}</th>
                 <th>{{ 'user_first_name'|trans }}</th>
                 <th>{{ 'user_last_name'|trans }}</th>
@@ -20,7 +19,6 @@
             <tbody>
             {% for userdata in userdata %}
                 <tr>
-                    <td>{{ userdata.UserId }}</td>
                     <td>{{ userdata.UserEmail }}</td>
                     <td>{{ userdata.UserFirstName }}</td>
                     <td>{{ userdata.UserLastName }}</td>
@@ -34,4 +32,5 @@
             {{ 'message_empty_list'|trans }}
         </p>
     {% endif %}
+
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Task controller.
+ * ImageType controller.
  */
 
 namespace App\Controller;
@@ -21,14 +21,14 @@ class ImageTypeController extends AbstractController
     /**
      * Index action.
      *
-     * @param \App\Repository\ImageTypeRepository $imagetypeRepository Task repository
+     * @param \App\Repository\ImageTypeRepository $imagetypeRepository ImageType repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
      *     "/",
      *     methods={"GET"},
-     *     name="task_index",
+     *     name="imagetype_index",
      * )
      */
     public function index(ImageTypeRepository $imagetypeRepository): Response
@@ -42,14 +42,14 @@ class ImageTypeController extends AbstractController
     /**
      * Show action.
      *
-     * @param \App\Entity\ImageType $imagetype Task entity
+     * @param \App\Entity\ImageType $imagetype ImageType entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
      *     "/{id}",
      *     methods={"GET"},
-     *     name="album_show",
+     *     name="imagetype_show",
      *     requirements={"id": "[1-9]\d*"},
      * )
      */

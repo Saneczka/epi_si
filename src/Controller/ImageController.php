@@ -1,6 +1,6 @@
 <?php
 /**
- * Task controller.
+ * Image controller.
  */
 
 namespace App\Controller;
@@ -9,47 +9,56 @@ use App\Entity\Image;
 use App\Repository\ImageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AlbumController.
+ * Class ImageController.
  *
- * @Route("/image", name="image")
+ * @Route("/image")
  */
 class ImageController extends AbstractController
 {
     /**
      * Index action.
      *
-     * @param \App\Repository\ImageRepository $imageRepository Task repository
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
+     * @param \App\Repository\AlbumRepository            $imageRepository Image repository
+     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
      *     "/",
-     *     methods={"GET"},
-     *     name="task_index",
+     *     name="image_index",
      * )
      */
-    public function index(ImageRepository $imageRepository): Response
-    {
-        return $this->render(
-            'image/index.html.twig',
-            ['image' => $imageRepository->findAll()]
-        );
-    }
+    public function index(Request $request, ImageRepository $imageRepository, PaginatorInterface $paginator): Response
+{
+    $pagination = $paginator->paginate(
+        $imageRepository->queryAll(),
+        $request->query->getInt('page', 1),
+        ImageRepository::PAGINATOR_ITEMS_PER_PAGE
+    );
+
+    return $this->render(
+        'image/index.html.twig',
+        ['pagination' => $pagination]
+    );
+}
 
     /**
      * Show action.
      *
-     * @param \App\Entity\Image $image Task entity
+     * @param \App\Entity\Image $image Image entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
      *     "/{id}",
      *     methods={"GET"},
-     *     name="album_show",
+     *     name="image_show",
      *     requirements={"id": "[1-9]\d*"},
      * )
      */

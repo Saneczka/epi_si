@@ -1,52 +1,35 @@
 <?php
 /**
- * Task fixtures.
+ * Category fixture.
  */
 
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
 /**
- * Class TaskFixtures.
+ * Class CategoryFixtures.
  */
-class UserFixtures extends Fixture
+class UserFixtures extends AbstractBaseFixtures
 {
     /**
-     * Faker.
+     * Load data.
      *
-     * @var \Faker\Generator
+     * @param \Doctrine\Persistence\ObjectManager $manager Object manager
      */
-    protected $faker;
-
-    /**
-     * Persistence object manager.
-     *
-     * @var \Doctrine\Persistence\ObjectManager
-     */
-    protected $manager;
-
-    /**
-     * Load.
-     *
-     * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
-     */
-    public function load(ObjectManager $manager): void
+    public function loadData(ObjectManager $manager): void
     {
-        $this->faker = Factory::create();
-        $this->manager = $manager;
+        $this->createMany(10, 'userData', function ($i) {
+            $category = new User();
+            $category->setUserId($this->faker->randomNumber());
+            $category->setUsername($this->faker->userName);
+            $category->setUserPassword($this->faker->password);
+            $category->setUserRole($this->faker->randomElements($array = array ('a','b','c'), $count = 1));
 
-        for ($i = 0; $i < 10; ++$i) {
-            $task = new User();
-            $task->setUserId($this->faker->randomNumber());
-            $task->setUsername($this->faker->userName);
-            $task->setUserPassword($this->faker->password);
-            $task->setUserRole($this->faker->randomElements($array = array ('a','b','c'), $count = 1));
-            $this->manager->persist($task);
-        }
+
+            return $category;
+        });
 
         $manager->flush();
     }

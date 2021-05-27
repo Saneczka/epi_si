@@ -8,8 +8,6 @@
     <h1>{{ 'title_userdata_details'|trans({'%id%': userdata.UserId|default('')}) }}</h1>
     {% if userdata is defined and userdata|length %}
         <dl class="dl-horizontal">
-            <dt>{{ 'user_id'|trans }}</dt>
-            <dd>{{ userdata.UserId }}</dd>
             <dt>{{ 'user_email'|trans }}</dt>
             <dd>{{ userdata.UserEmail }}</dd>
             <dt>{{ 'user_first_name'|trans }}</dt>

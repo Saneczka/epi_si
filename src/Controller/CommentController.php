@@ -1,6 +1,6 @@
 <?php
 /**
- * Task controller.
+ * Comment controller.
  */
 
 namespace App\Controller;
@@ -9,40 +9,48 @@ use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
 /**
  * Class CommentController.
  *
- * @Route("/comment", name="comment")
+ * @Route("/comment")
  */
 class CommentController extends AbstractController
 {
     /**
      * Index action.
      *
-     * @param \App\Repository\CommentRepository $commentRepository Task repository
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
+     * @param \App\Repository\AlbumRepository            $commentRepository Comment repository
+     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
      *     "/",
-     *     methods={"GET"},
-     *     name="task_index",
+     *     name="comment_index",
      * )
      */
-    public function index(CommentRepository $commentRepository): Response
+    public function index(Request $request, CommentRepository $commentRepository, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $commentRepository->queryAll(),
+            $request->query->getInt('page', 1),
+            CommentRepository::PAGINATOR_ITEMS_PER_PAGE
+        );
+
         return $this->render(
             'comment/index.html.twig',
-            ['comment' => $commentRepository->findAll()]
+            ['pagination' => $pagination]
         );
     }
 
     /**
      * Show action.
      *
-     * @param \App\Entity\Album $comment Task entity
+     * @param \App\Entity\Album $comment Comment entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *

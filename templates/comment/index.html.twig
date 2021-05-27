@@ -6,27 +6,26 @@
 
 {% block body %}
     <h1>{{ 'Dane komentarze'|trans }}</h1>
-    {% if comment is defined and comment|length %}
+    {% if pagination is defined and pagination.items|length %}
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ 'comment_id'|trans }}</th>
-                <th>{{ 'comment_content'|trans }}</th>
-                <th>{{ 'user_id'|trans }}</th>
-                <th>{{ 'image_id'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'comment_id'|trans,'comment_id')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'comment_content'|trans,'comment_content')}}</th>
             </tr>
             </thead>
             <tbody>
-            {% for comment in comment %}
+            {% for comment in pagination.items %}
                 <tr>
                     <td>{{ comment.CommentId }}</td>
                     <td>{{ comment.CommentContent }}</td>
-                    <td>{{ comment.UserId }}</td>
-                    <td>{{ comment.ImageId }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% else %}
         <p>
             {{ 'message_empty_list'|trans }}

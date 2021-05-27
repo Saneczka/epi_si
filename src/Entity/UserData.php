@@ -18,11 +18,6 @@ class UserData
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $user_id;
-
-    /**
      * @ORM\Column(type="string", length=250)
      */
     private $user_email;
@@ -42,21 +37,15 @@ class UserData
      */
     private $user_icon;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="userData", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
     }
 
     public function getUserEmail(): ?string
@@ -103,6 +92,18 @@ class UserData
     public function setUserIcon(?string $user_icon): self
     {
         $this->user_icon = $user_icon;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(user $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

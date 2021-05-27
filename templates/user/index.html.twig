@@ -6,17 +6,17 @@
 
 {% block body %}
     <h1>{{ 'Dane użytkowników'|trans }}</h1>
-    {% if user is defined and user|length %}
+    {% if pagination is defined and pagination.items|length %}
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ 'user_id'|trans }}</th>
-                <th>{{ 'username'|trans }}</th>
-                <th>{{ 'user_password'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'user_id'|trans,'user_id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'username'|trans,'username')}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'user_password'|trans,'user_password')}}</th>
             </tr>
             </thead>
             <tbody>
-            {% for user in user %}
+            {% for user in pagination.items %}
                 <tr>
                     <td>{{ user.UserId }}</td>
                     <td>{{ user.Username }}</td>
@@ -25,6 +25,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% else %}
         <p>
             {{ 'message_empty_list'|trans }}

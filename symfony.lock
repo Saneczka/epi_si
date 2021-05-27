@@ -131,7 +131,7 @@
         "version": "v3.0.2"
     },
     "knplabs/knp-paginator-bundle": {
-        "version": "v5.4.2"
+        "version": "v5.5.0"
     },
     "laminas/laminas-code": {
         "version": "4.2.1"
